@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -55,37 +54,6 @@ export function SeatsForm({ initialData, onSubmit, loading }: TSeatsFormProps) {
         : '2024-01-02T00:00'
     }
   });
-
-  const [errorMessage, setErrorMessage] = useState<string | null>(null); // State untuk error message
-
-  // Fungsi onSubmit
-  const handleSubmit = async (values: TSeatsCreate) => {
-    try {
-      // Lakukan request ke API
-      const response = await fetch('/api/seats', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(values)
-      });
-
-      if (!response.ok) {
-        // Jika response tidak OK, ambil pesan error dari API
-        const errorData = await response.json();
-        throw new Error(
-          errorData.error.message || 'Terjadi kesalahan saat menyimpan data.'
-        );
-      }
-
-      // Jika sukses, panggil onSubmit yang ada
-      onSubmit(values);
-      alert('Seat berhasil disimpan!');
-    } catch (error: any) {
-      // Set error message jika ada error
-      setErrorMessage(error.message);
-    }
-  };
 
   return (
     <Form {...form}>
