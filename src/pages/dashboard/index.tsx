@@ -12,9 +12,47 @@ import {
   TabsList,
   TabsTrigger
 } from '@/components/ui/tabs.js';
-import RecentSales from './components/recent-sales.js';
+import { dashboardService } from '../../services/dashboard.ts';
+import { useQuery } from '@tanstack/react-query';
+import { ColumnDef } from '@tanstack/react-table';
+import { Tbookings } from '@/types/dashboard.ts';
+import { DataTableSkeleton } from '@/components/shared/data-table-skeleton';
+import DataTable from '../../components/shared/data-table';
 
 export default function DashboardPage() {
+  const { data: bookings, isLoading } = useQuery({
+    queryKey: ['bookings'],
+    queryFn: dashboardService.getAll
+  });
+
+  const columns: ColumnDef<Tbookings>[] = [
+    {
+      accessorKey: 'createdAt',
+      header: 'Created At'
+    },
+    {
+      accessorKey: 'code',
+      header: 'Booking Code'
+    },
+    {
+      accessorKey: 'status',
+      header: 'Status'
+    },
+    {
+      accessorKey: 'flight.flightNumber',
+      header: 'Flight Number'
+    },
+    {
+      accessorKey: 'flight.class',
+      header: 'Class'
+    },
+    {
+      accessorKey: 'totalPrice',
+      header: 'Total Price'
+    }
+  ];
+
+  if (isLoading) return <DataTableSkeleton columnCount={5} />;
   return (
     <>
       <PageHead title="Dashboard | App" />
@@ -36,7 +74,7 @@ export default function DashboardPage() {
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">
-                    Total Revenue
+                    Total Transactions
                   </CardTitle>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -61,7 +99,7 @@ export default function DashboardPage() {
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">
-                    Subscriptions
+                    Total Users
                   </CardTitle>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -87,19 +125,29 @@ export default function DashboardPage() {
               </Card>
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Sales</CardTitle>
+                  <CardTitle className="text-sm font-medium">
+                    Total Airports
+                  </CardTitle>
+
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    className="h-4 w-4 text-muted-foreground"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    className="lucide lucide-tower-control h-4 w-4 text-muted-foreground"
                   >
-                    <rect width="20" height="14" x="2" y="5" rx="2" />
-                    <path d="M2 10h20" />
+                    <path d="M18.2 12.27 20 6H4l1.8 6.27a1 1 0 0 0 .95.73h10.5a1 1 0 0 0 .96-.73Z" />
+                    <path d="M8 13v9" />
+                    <path d="M16 22v-9" />
+                    <path d="m9 6 1 7" />
+                    <path d="m15 6-1 7" />
+                    <path d="M12 6V2" />
+                    <path d="M13 2h-2" />
                   </svg>
                 </CardHeader>
                 <CardContent>
@@ -112,19 +160,79 @@ export default function DashboardPage() {
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">
-                    Active Now
+                    Total Airlines
                   </CardTitle>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    className="h-4 w-4 text-muted-foreground"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    className="lucide lucide-plane h-4 w-4 text-muted-foreground"
                   >
-                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                    <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z" />
+                  </svg>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">+573</div>
+                  <p className="text-xs text-muted-foreground">
+                    +201 since last hour
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">
+                    Total Flights
+                  </CardTitle>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    className="lucide lucide-plane h-4 w-4 text-muted-foreground"
+                  >
+                    <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z" />
+                  </svg>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">+12,234</div>
+                  <p className="text-xs text-muted-foreground">
+                    +19% from last month
+                  </p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">
+                    Total Bookings
+                  </CardTitle>
+
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    className="lucide lucide-tickets-plane h-4 w-4 text-muted-foreground"
+                  >
+                    <path d="M10.5 17h1.227a2 2 0 0 0 1.345-.52L18 12" />
+                    <path d="m12 13.5 3.75.5" />
+                    <path d="m4.5 8 10.58-5.06a1 1 0 0 1 1.342.488L18.5 8" />
+                    <path d="M6 10V8" />
+                    <path d="M6 14v1" />
+                    <path d="M6 19v2" />
+                    <rect x="2" y="8" width="20" height="13" rx="2" />
                   </svg>
                 </CardHeader>
                 <CardContent>
@@ -136,21 +244,19 @@ export default function DashboardPage() {
               </Card>
             </div>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7">
-              <Card className="col-span-4">
+              <Card className="col-span-12 md:col-span-12">
                 <CardHeader>
-                  <CardTitle>Overview</CardTitle>
-                </CardHeader>
-                <CardContent className="pl-2">{/* <Overview /> */}</CardContent>
-              </Card>
-              <Card className="col-span-4 md:col-span-3">
-                <CardHeader>
-                  <CardTitle>Recent Sales</CardTitle>
+                  <CardTitle>Recent Bookings</CardTitle>
                   <CardDescription>
-                    You made 265 sales this month.
+                    You made 20 + bookings this month
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <RecentSales />
+                  <DataTable
+                    columns={columns}
+                    data={bookings || []}
+                    pageCount={1}
+                  />
                 </CardContent>
               </Card>
             </div>

@@ -10,7 +10,7 @@ export const navItems: NavItem[] = [
   {
     title: 'Airlines',
     href: '/airlines',
-    icon: 'add',
+    icon: 'plane',
     label: 'Airlines'
   },
   {
