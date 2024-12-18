@@ -20,6 +20,12 @@ export const navItems: NavItem[] = [
     label: 'Airports'
   },
   {
+    title: 'Flights',
+    href: '/flights',
+    icon: 'globe',
+    label: 'Flights'
+  },
+  {
     title: 'Notifications',
     href: '/Notifications',
     icon: 'bell',
