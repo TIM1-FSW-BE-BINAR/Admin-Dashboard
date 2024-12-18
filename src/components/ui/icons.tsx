@@ -29,6 +29,8 @@ import {
   User2Icon,
   UserX2Icon,
   X,
+  Bell,
+  Armchair,
   Plane,
   Percent
 } from 'lucide-react';
@@ -62,6 +64,8 @@ export const Icons = {
   sun: SunMedium,
   moon: Moon,
   laptop: Laptop,
+  bell: Bell,
+  armchair: Armchair,
   plane: Plane,
   percent: Percent,
   gitHub: ({ ...props }: LucideProps) => (
