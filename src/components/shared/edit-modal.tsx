@@ -1,4 +1,5 @@
 import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { ScrollArea } from '../ui/scroll-area';
 
 type TEditModalProps = {
   isOpen: boolean;
@@ -13,7 +14,9 @@ export default function EditModal({
 }: TEditModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent>{children}</DialogContent>
+      <DialogContent>
+        <ScrollArea className="max-h-[80vh]">{children}</ScrollArea>
+      </DialogContent>
     </Dialog>
   );
 }

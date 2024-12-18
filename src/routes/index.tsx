@@ -3,6 +3,7 @@ import NotFound from '@/pages/not-found';
 import { Suspense, lazy } from 'react';
 import { Navigate, Outlet, useRoutes } from 'react-router-dom';
 import AirlinesPage from '@/pages/airlines';
+import AirportsPage from '@/pages/airports';
 import NotificationsPage from '@/pages/notifications';
 import SeatsPage from '@/pages/seats';
 import DiscountsPage from '@/pages/discounts';
@@ -37,6 +38,10 @@ export default function AppRouter() {
         {
           path: 'airlines',
           element: <AirlinesPage />
+        },
+        {
+          path: 'airports',
+          element: <AirportsPage />
         },
         {
           path: 'notifications',
