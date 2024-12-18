@@ -2,6 +2,12 @@ import FormPage from '@/pages/form';
 import NotFound from '@/pages/not-found';
 import { Suspense, lazy } from 'react';
 import { Navigate, Outlet, useRoutes } from 'react-router-dom';
+import AirlinesPage from '@/pages/airlines';
+import AirportsPage from '@/pages/airports';
+import NotificationsPage from '@/pages/notifications';
+import SeatsPage from '@/pages/seats';
+import DiscountsPage from '@/pages/discounts';
+import FlightsPage from '@/pages/flights';
 
 const DashboardLayout = lazy(
   () => import('@/components/layout/dashboard-layout')
@@ -30,6 +36,30 @@ export default function AppRouter() {
         {
           element: <DashboardPage />,
           index: true
+        },
+        {
+          path: 'airlines',
+          element: <AirlinesPage />
+        },
+        {
+          path: 'airports',
+          element: <AirportsPage />
+        },
+        {
+          path: 'flights',
+          element: <FlightsPage />
+        },
+        {
+          path: 'notifications',
+          element: <NotificationsPage />
+        },
+        {
+          path: 'seats',
+          element: <SeatsPage />
+        },
+        {
+          path: 'discount',
+          element: <DiscountsPage />
         },
         {
           path: 'student',
