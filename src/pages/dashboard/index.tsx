@@ -78,7 +78,6 @@ export default function DashboardPage() {
   ];
 
   if (isLoading) return <DataTableSkeleton columnCount={5} />;
-  if (isLoadingDataTotal) return <DataTableSkeleton columnCount={5} />;
   return (
     <>
       <PageHead title="Dashboard | App" />
