@@ -14,6 +14,12 @@ export const navItems: NavItem[] = [
     label: 'Airlines'
   },
   {
+    title: 'Discount',
+    href: '/discount',
+    icon: 'percent',
+    label: 'Discount'
+  },
+  {
     title: 'Students',
     href: '/student',
     icon: 'user',

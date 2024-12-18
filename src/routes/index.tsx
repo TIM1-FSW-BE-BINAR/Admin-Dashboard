@@ -3,7 +3,7 @@ import NotFound from '@/pages/not-found';
 import { Suspense, lazy } from 'react';
 import { Navigate, Outlet, useRoutes } from 'react-router-dom';
 import AirlinesPage from '@/pages/airlines';
-
+import DiscountsPage from '@/pages/discounts';
 const DashboardLayout = lazy(
   () => import('@/components/layout/dashboard-layout')
 );
@@ -35,6 +35,10 @@ export default function AppRouter() {
         {
           path: 'airlines',
           element: <AirlinesPage />
+        },
+        {
+          path: 'discount',
+          element: <DiscountsPage />
         },
         {
           path: 'student',
