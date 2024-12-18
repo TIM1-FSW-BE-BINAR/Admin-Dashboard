@@ -4,99 +4,126 @@ import { DataTableSkeleton } from '@/components/shared/data-table-skeleton';
 import Heading from '@/components/shared/heading';
 import PopupModal from '@/components/shared/popup-modal';
 import { Button } from '@/components/ui/button';
-import { discountsService } from '@/services/discount';
-import { TDiscounts, TDiscountCreate } from '@/types/discounts';
+import { flightsService } from '@/services/flight';
+import { airlinesService } from '@/services/airline';
+import { airportsService } from '@/services/airport';
+import { TFlights, TFlightCreate } from '@/types/flights';
+
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ColumnDef } from '@tanstack/react-table';
 import { Edit, Trash } from 'lucide-react';
 import { useState } from 'react';
-import { DiscountsForm } from '@/components/discounts/discounts-form';
+import { FlightsForm } from '@/components/flights/flights-form';
 import EditModal from '@/components/shared/edit-modal';
 
-export default function DiscountsPage() {
+export default function FlightsPage() {
   const [deleteId, setDeleteId] = useState<number | null>(null);
-  const [editData, setEditData] = useState<TDiscounts | null>(null);
+  const [editData, setEditData] = useState<TFlights | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const queryClient = useQueryClient();
 
-  const { data: discount, isLoading } = useQuery({
-    queryKey: ['discount'],
-    queryFn: discountsService.getAll
+  const { data: flights, isLoading } = useQuery({
+    queryKey: ['flights'],
+    queryFn: flightsService.getAll
+  });
+
+  const { data: airlines } = useQuery({
+    queryKey: ['airlines'],
+    queryFn: airlinesService.getAll
+  });
+
+  const { data: airports } = useQuery({
+    queryKey: ['airports'],
+    queryFn: airportsService.getAll
   });
 
   const createMutation = useMutation({
-    mutationFn: discountsService.create,
+    mutationFn: flightsService.create,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['discount'] });
+      queryClient.invalidateQueries({ queryKey: ['flights'] });
     }
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, data }: { id: number; data: TDiscountCreate }) =>
-      discountsService.update(id, data),
+    mutationFn: ({ id, data }: { id: number; data: TFlightCreate }) =>
+      flightsService.update(id, data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['discount'] });
+      queryClient.invalidateQueries({ queryKey: ['flights'] });
       setEditData(null);
     }
   });
 
   const deleteMutation = useMutation({
-    mutationFn: discountsService.delete,
+    mutationFn: flightsService.delete,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['discount'] });
+      queryClient.invalidateQueries({ queryKey: ['flights'] });
       setDeleteId(null);
     }
   });
 
-  const columns: ColumnDef<TDiscounts>[] = [
+  const columns: ColumnDef<TFlights>[] = [
     {
-      accessorKey: 'name',
-      header: 'Discount Name'
+      accessorKey: 'flightNumber',
+      header: 'Flight Number'
     },
     {
-      accessorKey: 'type',
-      header: 'Type'
+      accessorKey: 'airlineId',
+      header: 'Airline',
+      cell: ({ row }) => {
+        const airline = airlines?.find(
+          (airline) => airline.id === row.original.airlineId
+        );
+        return airline ? airline.name : 'Unknown Airline';
+      }
     },
     {
-      accessorKey: 'value',
-      header: 'Value'
+      accessorKey: 'departureAirport',
+      header: 'Departure Airport',
+      cell: ({ row }) => {
+        const airport = airports?.find(
+          (airport) => airport.id === row.original.departureAirport
+        );
+        return airport ? airport.name : 'Unknown Airport';
+      }
+    },
+
+    {
+      accessorKey: 'departureTime',
+      header: 'Departure Time',
+      cell: ({ row }) => new Date(row.original.departureTime).toLocaleString()
     },
     {
-      accessorKey: 'startDate',
-      header: 'Start Date',
-      cell: ({ row }) => new Date(row.original.startDate).toLocaleString()
+      accessorKey: 'arrivalAirport',
+      header: 'Arrival Airport',
+      cell: ({ row }) => {
+        const airport = airports?.find(
+          (airport) => airport.id === row.original.arrivalAirport
+        );
+        return airport ? airport.name : 'Unknown Airport';
+      }
     },
     {
-      accessorKey: 'endDate',
-      header: 'End Date',
-      cell: ({ row }) => new Date(row.original.endDate).toLocaleString()
+      accessorKey: 'arrivalTime',
+      header: 'Arrival Time',
+      cell: ({ row }) => new Date(row.original.arrivalTime).toLocaleString()
     },
     {
-      accessorKey: 'minPurchase',
-      header: 'Minimal Purchase'
+      accessorKey: 'terminal',
+      header: 'Terminal'
     },
     {
-      accessorKey: 'isActive',
-      header: 'Active'
+      accessorKey: 'information',
+      header: 'Information'
+    },
+
+    {
+      accessorKey: 'price',
+      header: 'Price'
     },
     {
-      accessorKey: 'createdAt',
-      header: 'Created',
-      cell: ({ row }) => new Date(row.original.createdAt).toLocaleString()
-    },
-    {
-      accessorKey: 'updatedAt',
-      header: 'Updated',
-      cell: ({ row }) => new Date(row.original.updatedAt).toLocaleString()
-    },
-    {
-      accessorKey: 'code',
-      header: 'Code'
-    },
-    {
-      accessorKey: 'description',
-      header: 'Description'
+      accessorKey: 'class',
+      header: 'Class'
     },
     {
       id: 'actions',
@@ -134,7 +161,7 @@ export default function DiscountsPage() {
           renderModal={(onClose) => (
             <div className="p-6">
               <Heading title="Add Discount" description="Add new dicount" />
-              <DiscountsForm
+              <FlightsForm
                 onSubmit={async (data) => {
                   await createMutation.mutateAsync(data);
                   onClose();
@@ -146,7 +173,7 @@ export default function DiscountsPage() {
         />
       </div>
 
-      <DataTable columns={columns} data={discount || []} pageCount={1} />
+      <DataTable columns={columns} data={flights || []} pageCount={1} />
 
       <AlertModal
         isOpen={!!deleteId}
@@ -165,7 +192,7 @@ export default function DiscountsPage() {
         >
           <div className="p-6">
             <Heading title="Edit Dicount" description="Edit dicount" />
-            <DiscountsForm
+            <FlightsForm
               initialData={editData}
               onSubmit={async (data) => {
                 await updateMutation.mutateAsync({

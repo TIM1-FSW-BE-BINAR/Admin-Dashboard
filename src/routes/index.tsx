@@ -7,6 +7,7 @@ import AirportsPage from '@/pages/airports';
 import NotificationsPage from '@/pages/notifications';
 import SeatsPage from '@/pages/seats';
 import DiscountsPage from '@/pages/discounts';
+import FlightsPage from '@/pages/flights';
 const DashboardLayout = lazy(
   () => import('@/components/layout/dashboard-layout')
 );
@@ -42,6 +43,10 @@ export default function AppRouter() {
         {
           path: 'airports',
           element: <AirportsPage />
+        },
+        {
+          path: 'flights',
+          element: <FlightsPage />
         },
         {
           path: 'notifications',
