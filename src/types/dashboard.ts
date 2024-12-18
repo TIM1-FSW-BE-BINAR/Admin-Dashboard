@@ -23,3 +23,17 @@ export type Tbookings = {
     class: string;
   };
 };
+
+export type TDataResponse = {
+  totalAirlines: number;
+  totalAirports: number;
+  totalFlights: number;
+  totalUsers: number;
+  totalTransactions: number;
+  totalDiscounts: number;
+  totalNotifications: number;
+  totalBookings: number;
+  totalPassengers: number;
+  totalSeats: number;
+  totalTickets: number;
+};
