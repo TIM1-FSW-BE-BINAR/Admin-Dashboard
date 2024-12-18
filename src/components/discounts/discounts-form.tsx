@@ -12,19 +12,21 @@ import { TDiscounts, TDiscountCreate } from '@/types/discounts';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import { format } from 'date-fns';
 
 const formSchema = z.object({
   name: z.string().min(1, 'Nama diskon harus diisi'),
   code: z.string().min(1, 'Kode diskon harus diisi'),
   type: z.string().min(1, 'Tipe diskon harus diisi'),
-  value: z.number().min(1, 'Nilai diskon harus lebih dari 0'),
-  startDate: z.string().min(1, 'Tanggal mulai harus diisi'),
-  endDate: z.string().min(1, 'Tanggal akhir harus diisi'),
-  minPurchase: z.number().min(0, 'Pembelian minimum harus lebih dari 0'),
+  value: z.coerce.number().min(1, 'Nilai diskon harus lebih dari 0'),
+  startDate: z
+    .string()
+    .refine((val) => !isNaN(Date.parse(val)), 'Tanggal mulai tidak valid'),
+  endDate: z
+    .string()
+    .refine((val) => !isNaN(Date.parse(val)), 'Tanggal akhir tidak valid'),
+  minPurchase: z.coerce.number().min(0, 'Pembelian minimum harus lebih dari 0'),
   isActive: z.boolean(),
-  description: z.string().optional(),
-  image: z.instanceof(File, { message: 'Gambar harus diupload' })
+  description: z.string().optional()
 });
 
 type TDiscountsFormProps = {
@@ -46,11 +48,11 @@ export function DiscountsForm({
       type: initialData?.type || '',
       value: initialData?.value || 0,
       startDate: initialData?.startDate
-        ? format(new Date(initialData.startDate), 'yyyy-MM-dd')
-        : '',
+        ? initialData.startDate.slice(0, 16)
+        : '2024-01-01T00:00',
       endDate: initialData?.endDate
-        ? format(new Date(initialData.endDate), 'yyyy-MM-dd')
-        : '',
+        ? initialData.endDate.slice(0, 16)
+        : '2024-01-02T00:00',
       minPurchase: initialData?.minPurchase || 0,
       isActive: initialData?.isActive || false,
       description: initialData?.description || ''
@@ -61,7 +63,7 @@ export function DiscountsForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="max-h-[500px] space-y-8 overflow-y-auto p-4"
+        className="max-h-[500px] space-y-8 overflow-y-auto p-4 "
       >
         <FormField
           control={form.control}
@@ -132,7 +134,7 @@ export function DiscountsForm({
               <FormControl>
                 <Input
                   placeholder="Pilih tanggal mulai"
-                  type="date"
+                  type="datetime-local"
                   {...field}
                 />
               </FormControl>
@@ -150,7 +152,7 @@ export function DiscountsForm({
               <FormControl>
                 <Input
                   placeholder="Pilih tanggal akhir"
-                  type="date"
+                  type="datetime-local"
                   {...field}
                 />
               </FormControl>
@@ -185,6 +187,24 @@ export function DiscountsForm({
               <FormLabel>Description</FormLabel>
               <FormControl>
                 <Input placeholder="Masukkan description" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="isActive"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Active</FormLabel>
+              <FormControl>
+                <Input
+                  type="checkbox"
+                  checked={field.value}
+                  onChange={(e) => field.onChange(e.target.checked)}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
