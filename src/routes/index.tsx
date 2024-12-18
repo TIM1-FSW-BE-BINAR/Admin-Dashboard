@@ -8,6 +8,7 @@ import NotificationsPage from '@/pages/notifications';
 import SeatsPage from '@/pages/seats';
 import DiscountsPage from '@/pages/discounts';
 import FlightsPage from '@/pages/flights';
+
 const DashboardLayout = lazy(
   () => import('@/components/layout/dashboard-layout')
 );
