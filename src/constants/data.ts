@@ -14,6 +14,18 @@ export const navItems: NavItem[] = [
     label: 'Airlines'
   },
   {
+    title: 'Notifications',
+    href: '/Notifications',
+    icon: 'bell',
+    label: 'Notifications'
+  },
+  {
+    title: 'Seats',
+    href: '/Seats',
+    icon: 'armchair',
+    label: 'Seats'
+  },
+  {
     title: 'Students',
     href: '/student',
     icon: 'user',
