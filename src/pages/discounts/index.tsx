@@ -20,7 +20,7 @@ export default function DiscountsPage() {
 
   const queryClient = useQueryClient();
 
-  const { data: discount, isLoading } = useQuery({
+  const { data: airlines, isLoading } = useQuery({
     queryKey: ['discount'],
     queryFn: discountsService.getAll
   });
@@ -146,7 +146,7 @@ export default function DiscountsPage() {
         />
       </div>
 
-      <DataTable columns={columns} data={discount || []} pageCount={1} />
+      <DataTable columns={columns} data={airlines || []} pageCount={1} />
 
       <AlertModal
         isOpen={!!deleteId}
