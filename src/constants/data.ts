@@ -10,7 +10,7 @@ export const navItems: NavItem[] = [
   {
     title: 'Airlines',
     href: '/airlines',
-    icon: 'add',
+    icon: 'plane',
     label: 'Airlines'
   },
   {
@@ -18,6 +18,18 @@ export const navItems: NavItem[] = [
     href: '/airports',
     icon: 'towerControl',
     label: 'Airports'
+  },
+  {
+    title: 'Notifications',
+    href: '/Notifications',
+    icon: 'bell',
+    label: 'Notifications'
+  },
+  {
+    title: 'Seats',
+    href: '/Seats',
+    icon: 'armchair',
+    label: 'Seats'
   },
   {
     title: 'Students',
