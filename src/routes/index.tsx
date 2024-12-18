@@ -6,7 +6,7 @@ import AirlinesPage from '@/pages/airlines';
 import AirportsPage from '@/pages/airports';
 import NotificationsPage from '@/pages/notifications';
 import SeatsPage from '@/pages/seats';
-
+import DiscountsPage from '@/pages/discounts';
 const DashboardLayout = lazy(
   () => import('@/components/layout/dashboard-layout')
 );
@@ -50,6 +50,10 @@ export default function AppRouter() {
         {
           path: 'seats',
           element: <SeatsPage />
+        },
+        {
+          path: 'discount',
+          element: <DiscountsPage />
         },
         {
           path: 'student',
