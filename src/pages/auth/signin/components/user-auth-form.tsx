@@ -15,8 +15,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import { authService } from '@/services/auth'; // Import service login
-import { toast } from 'react-toastify'; // Import Toastify
+import { authService } from '@/services/auth';
+import { toast } from 'react-toastify';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Enter a valid email address' }),

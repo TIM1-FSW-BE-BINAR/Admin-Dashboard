@@ -12,7 +12,6 @@ import { RootState } from '../../../redux/store';
 export default function SignInPage() {
   const navigate = useNavigate();
 
-  // Mengambil data user dan token dari Redux store
   const { token } = useSelector((state: RootState) => state);
 
   useEffect(() => {

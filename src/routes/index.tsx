@@ -24,7 +24,6 @@ const StudentDetailPage = lazy(
 
 // ----------------------------------------------------------------------
 
-// Komponen proteksi rute
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { token } = useSelector((state: RootState) => state);
 
@@ -35,7 +34,6 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
-// Fungsi utama router
 export default function AppRouter() {
   const dashboardRoutes = [
     {
