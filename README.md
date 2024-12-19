@@ -31,7 +31,7 @@ The goal of the project is to provide admin dashboard for Airfly - Airplane tick
 | --------------------------------------------- | ------ |
 | Responsive: support mobile design             | ✅     |
 | Authentication                                | ✅     |
-| State Management: React Hooks, Tanstack Query | ✅     |
+| State Management: React Hooks, Tanstack Query, Redux, Redux Toolkit  | ✅     |
 | Role: Admin                                   | ✅     |
 | Deployment: CloudFlare                        | ✅     |
 | GIT: Branching                                | ✅     |
@@ -50,6 +50,8 @@ The goal of the project is to provide admin dashboard for Airfly - Airplane tick
 - ![React](https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=white&style=for-the-badge)
 - ![React Router Dom](https://img.shields.io/badge/-React%20Router%20Dom-0078D4?logo=react-router&logoColor=white&style=for-the-badge)
 - ![Tanstack Query](https://img.shields.io/badge/-Tanstack%20Query-FF4154?logo=tanstack-query&logoColor=white&style=for-the-badge)
+- ![Redux](https://img.shields.io/badge/-Redux-764ABC?logo=redux&logoColor=white&style=for-the-badge)
+- ![Redux Toolkit](https://img.shields.io/badge/-Redux%20Toolkit-764ABC?logo=redux&logoColor=white&style=for-the-badge)
 - ![Vite](https://img.shields.io/badge/-Vite-646CFF?logo=vite&logoColor=white&style=for-the-badge)
 
 ### Styling:
