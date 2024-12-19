@@ -7,17 +7,16 @@ import { useSelector } from 'react-redux';
 import logo from '../../../assets/airfly.png';
 import background from '../../../assets/Frame 1.svg';
 import plane from '../../../assets/plane.svg';
+import { RootState } from '../../../redux/store';
 
 export default function SignInPage() {
   const navigate = useNavigate();
 
   // Mengambil data user dan token dari Redux store
-  const { token } = useSelector((state) => state);
+  const { token } = useSelector((state: RootState) => state);
 
   useEffect(() => {
-    // Periksa apakah pengguna sudah login melalui Redux state
     if (token) {
-      // Jika sudah login, arahkan pengguna ke halaman "/"
       navigate('/');
     }
   }, [navigate, token]);
@@ -46,7 +45,6 @@ export default function SignInPage() {
           }}
         />
         <div className="relative z-20 flex flex-col items-center justify-center text-lg font-medium">
-          {/* masukan gambar logo dan background disini */}
           <img
             src={plane}
             alt=""

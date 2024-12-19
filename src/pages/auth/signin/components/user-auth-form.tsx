@@ -28,12 +28,12 @@ type UserFormValue = z.infer<typeof formSchema>;
 export default function UserAuthForm() {
   const router = useRouter();
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false); // Update state for loading
-  const [error, setError] = useState<string | null>(null); // State for error handling
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const defaultValues = {
     email: 'demo@gmail.com',
-    password: '' // Tambahkan default untuk password
+    password: ''
   };
 
   const form = useForm<UserFormValue>({
@@ -48,16 +48,14 @@ export default function UserAuthForm() {
       const response = await authService.login(data.email, data.password);
       localStorage.setItem('token', response.token);
 
-      // Ambil data user setelah login
       const userData = await authService.getCurrentUser();
 
       if (userData.role === 'ADMIN') {
-        // Simpan token dan user ke Redux
         dispatch(setToken(response.token));
         dispatch(setUsers(userData));
 
         toast.success('Login Successful');
-        router.push('/'); // Redirect ke halaman utama
+        router.push('/');
       } else {
         toast.error(
           'You do not have the required permissions to access this page.'

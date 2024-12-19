@@ -8,6 +8,7 @@ import AirlinesPage from '@/pages/airlines';
 import AirportsPage from '@/pages/airports';
 import NotificationsPage from '@/pages/notifications';
 import SeatsPage from '@/pages/seats';
+import { RootState } from '../redux/store';
 
 const DashboardLayout = lazy(
   () => import('@/components/layout/dashboard-layout')
@@ -23,7 +24,7 @@ const StudentDetailPage = lazy(
 
 // Komponen proteksi rute
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { token } = useSelector((state: any) => state);
+  const { token } = useSelector((state: RootState) => state);
 
   if (!token) {
     return <Navigate to="/login" replace />;
