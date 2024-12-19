@@ -14,6 +14,18 @@ export const navItems: NavItem[] = [
     label: 'Airlines'
   },
   {
+    title: 'Airports',
+    href: '/airports',
+    icon: 'towerControl',
+    label: 'Airports'
+  },
+  {
+    title: 'Flights',
+    href: '/flights',
+    icon: 'globe',
+    label: 'Flights'
+  },
+  {
     title: 'Notifications',
     href: '/Notifications',
     icon: 'bell',
@@ -24,6 +36,12 @@ export const navItems: NavItem[] = [
     href: '/Seats',
     icon: 'armchair',
     label: 'Seats'
+  },
+  {
+    title: 'Discount',
+    href: '/discount',
+    icon: 'percent',
+    label: 'Discount'
   },
   {
     title: 'Students',

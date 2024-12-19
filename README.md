@@ -15,7 +15,7 @@
 | Dhiya Ul Faruq (lead)     | Dashboard, Airlines |
 | Michael Joenathan Darwin  | Login, Airports     |
 | Naila Jinan Gaisani       | Seats, Notification |
-| Muhammad Fadhillah Rahman | Flights             |
+| Muhammad Fadhillah Rahman | Flights, Discount   |
 
 ## 🎯 Project Goal
 

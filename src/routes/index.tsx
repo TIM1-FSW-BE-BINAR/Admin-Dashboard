@@ -1,10 +1,16 @@
+import React, { Suspense, lazy } from 'react';
+import { Navigate, Outlet, useRoutes } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
 import FormPage from '@/pages/form';
 import NotFound from '@/pages/not-found';
-import { Suspense, lazy } from 'react';
-import { Navigate, Outlet, useRoutes } from 'react-router-dom';
 import AirlinesPage from '@/pages/airlines';
+import AirportsPage from '@/pages/airports';
 import NotificationsPage from '@/pages/notifications';
 import SeatsPage from '@/pages/seats';
+import DiscountsPage from '@/pages/discounts';
+import FlightsPage from '@/pages/flights';
+import { RootState } from '../redux/store';
 
 const DashboardLayout = lazy(
   () => import('@/components/layout/dashboard-layout')
@@ -18,16 +24,28 @@ const StudentDetailPage = lazy(
 
 // ----------------------------------------------------------------------
 
+function ProtectedRoute({ children }: { children: React.ReactNode }) {
+  const { token } = useSelector((state: RootState) => state);
+
+  if (!token) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <>{children}</>;
+}
+
 export default function AppRouter() {
   const dashboardRoutes = [
     {
       path: '/',
       element: (
-        <DashboardLayout>
-          <Suspense>
-            <Outlet />
-          </Suspense>
-        </DashboardLayout>
+        <ProtectedRoute>
+          <DashboardLayout>
+            <Suspense>
+              <Outlet />
+            </Suspense>
+          </DashboardLayout>
+        </ProtectedRoute>
       ),
       children: [
         {
@@ -39,12 +57,24 @@ export default function AppRouter() {
           element: <AirlinesPage />
         },
         {
+          path: 'airports',
+          element: <AirportsPage />
+        },
+        {
+          path: 'flights',
+          element: <FlightsPage />
+        },
+        {
           path: 'notifications',
           element: <NotificationsPage />
         },
         {
           path: 'seats',
           element: <SeatsPage />
+        },
+        {
+          path: 'discount',
+          element: <DiscountsPage />
         },
         {
           path: 'student',
