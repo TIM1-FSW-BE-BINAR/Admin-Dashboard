@@ -32,7 +32,9 @@ import {
   X,
   Bell,
   Armchair,
-  Plane
+  Plane,
+  Percent,
+  Globe
 } from 'lucide-react';
 
 export type Icon = LucideIcon;
@@ -67,6 +69,8 @@ export const Icons = {
   bell: Bell,
   armchair: Armchair,
   plane: Plane,
+  percent: Percent,
+  globe: Globe,
   gitHub: ({ ...props }: LucideProps) => (
     <svg
       aria-hidden="true"

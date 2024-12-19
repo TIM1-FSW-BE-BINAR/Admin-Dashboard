@@ -8,6 +8,8 @@ import AirlinesPage from '@/pages/airlines';
 import AirportsPage from '@/pages/airports';
 import NotificationsPage from '@/pages/notifications';
 import SeatsPage from '@/pages/seats';
+import DiscountsPage from '@/pages/discounts';
+import FlightsPage from '@/pages/flights';
 import { RootState } from '../redux/store';
 
 const DashboardLayout = lazy(
@@ -61,12 +63,20 @@ export default function AppRouter() {
           element: <AirportsPage />
         },
         {
+          path: 'flights',
+          element: <FlightsPage />
+        },
+        {
           path: 'notifications',
           element: <NotificationsPage />
         },
         {
           path: 'seats',
           element: <SeatsPage />
+        },
+        {
+          path: 'discount',
+          element: <DiscountsPage />
         },
         {
           path: 'student',
