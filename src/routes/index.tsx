@@ -1,7 +1,6 @@
 import React, { Suspense, lazy } from 'react';
 import { Navigate, Outlet, useRoutes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/store'; // Pastikan Anda mengimpor tipe state global Anda.
 
 import FormPage from '@/pages/form';
 import NotFound from '@/pages/not-found';
@@ -24,7 +23,7 @@ const StudentDetailPage = lazy(
 
 // Komponen proteksi rute
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { token } = useSelector((state) => state);
+  const { token } = useSelector((state: any) => state);
 
   if (!token) {
     return <Navigate to="/login" replace />;

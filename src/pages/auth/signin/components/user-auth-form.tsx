@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setToken, setUsers } from '../../../../redux/slices';
 import {
   Form,
