@@ -9,15 +9,35 @@ const getAuthHeaders = () => {
 };
 
 export const seatsService = {
-  getAll: async (): Promise<TSeats[]> => {
-    const response = await fetchApi<TApiResponse<TSeats[]>>(
-      '/seats?page=253&limit=30',
-      {
-        method: 'GET',
-        headers: getAuthHeaders()
-      }
-    );
-    return response.data;
+  getAll: async (
+    page: number,
+    limit: number
+  ): Promise<TApiResponse<TSeats[]>> => {
+    try {
+      const response = await fetchApi<TApiResponse<TSeats[]>>(
+        `/seats?page=${page}&limit=${limit}`,
+        {
+          method: 'GET',
+          headers: getAuthHeaders()
+        }
+      );
+
+      // Transform response untuk menyesuaikan dengan format yang diharapkan
+      return {
+        data: response.data,
+        meta: {
+          total:
+            response.meta.pagination.totalPage *
+            response.meta.pagination.pageItems, // Perkiraan total items
+          page: response.meta.pagination.currentPage,
+          limit: response.meta.pagination.pageItems,
+          totalPages: response.meta.pagination.totalPage
+        }
+      };
+    } catch (error) {
+      console.error('Service Error:', error);
+      throw error;
+    }
   },
 
   getById: async (id: number): Promise<TSeats> => {

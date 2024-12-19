@@ -5,6 +5,7 @@ import Heading from '@/components/shared/heading';
 import PopupModal from '@/components/shared/popup-modal';
 import { Button } from '@/components/ui/button';
 import { notificationsService } from '../../services/notifications';
+import { usersService } from '../../services/users';
 import { TNotifications, TNotificationsCreate } from '@/types/notifications';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ColumnDef } from '@tanstack/react-table';
@@ -23,6 +24,11 @@ export default function NotificationsPage() {
   const { data: notifications, isLoading } = useQuery({
     queryKey: ['notifications'],
     queryFn: notificationsService.getAll
+  });
+
+  const { data: users = [] } = useQuery({
+    queryKey: ['users'],
+    queryFn: usersService.getAll
   });
 
   const createMutation = useMutation({
@@ -61,6 +67,17 @@ export default function NotificationsPage() {
     {
       accessorKey: 'type',
       header: 'Tipe'
+    },
+    {
+      accessorKey: 'userId',
+      header: 'Penerima',
+      cell: ({ row }) => {
+        const userId = row.original.userId;
+        if (!userId) return 'Global';
+
+        const user = users.find((u) => u.id === Number(userId));
+        return user ? user.email : userId.toString();
+      }
     },
     {
       accessorKey: 'isRead',
@@ -107,6 +124,7 @@ export default function NotificationsPage() {
                 description="Tambah data notifikasi baru"
               />
               <NotificationsForm
+                users={users}
                 onSubmit={async (data) => {
                   await createMutation.mutateAsync(data);
                   onClose();
@@ -151,6 +169,7 @@ export default function NotificationsPage() {
                 setEditData(null);
               }}
               loading={updateMutation.isPending}
+              users={users}
             />
           </div>
         </EditModal>

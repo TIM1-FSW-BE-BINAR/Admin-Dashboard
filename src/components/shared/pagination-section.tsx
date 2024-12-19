@@ -22,40 +22,48 @@ export default function PaginationSection({
   currentPage,
   setCurrentPage
 }: TPaginationSectionProps) {
+  if (!totalPosts || totalPosts <= 0 || !postsPerPage || postsPerPage <= 0) {
+    return null;
+  }
+
+  const totalPages = Math.max(1, Math.ceil(totalPosts / postsPerPage));
+
+  const validCurrentPage = Math.min(Math.max(1, currentPage), totalPages);
+
   const pageNumbers: number[] = [];
-  for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
+  for (let i = 1; i <= totalPages; i++) {
     pageNumbers.push(i);
   }
 
-  const maxPageNum = 2; // Maximum page numbers to display at once
-  const pageNumLimit = Math.floor(maxPageNum / 2); // Current page should be in the middle if possible
+  const maxPageNum = 5;
+  const pageNumLimit = Math.floor(maxPageNum / 2);
 
   const activePages = pageNumbers.slice(
-    Math.max(0, currentPage - 1 - pageNumLimit),
-    Math.min(currentPage - 1 + pageNumLimit + 1, pageNumbers.length)
+    Math.max(0, validCurrentPage - 1 - pageNumLimit),
+    Math.min(validCurrentPage - 1 + pageNumLimit + 1, pageNumbers.length)
   );
 
   const handleNextPage = () => {
-    if (currentPage < pageNumbers.length) {
-      setCurrentPage(currentPage + 1);
+    if (validCurrentPage < totalPages) {
+      setCurrentPage(validCurrentPage + 1);
     }
   };
 
   const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+    if (validCurrentPage > 1) {
+      setCurrentPage(validCurrentPage - 1);
     }
   };
 
   const handlePrevPageLast = () => {
-    if (currentPage > 1) {
+    if (validCurrentPage > 1) {
       setCurrentPage(1);
     }
   };
 
   const handleNextPageLast = () => {
-    if (currentPage < pageNumbers.length) {
-      setCurrentPage(pageNumbers.length);
+    if (validCurrentPage < totalPages) {
+      setCurrentPage(totalPages);
     }
   };
 
@@ -64,7 +72,7 @@ export default function PaginationSection({
     const renderedPages = activePages.map((page, idx) => (
       <PaginationItem
         key={idx}
-        className={currentPage === page ? 'rounded-md bg-primary' : ''}
+        className={validCurrentPage === page ? 'rounded-md bg-primary' : ''}
       >
         <PaginationLink onClick={() => setCurrentPage(page)}>
           {page}
@@ -83,7 +91,7 @@ export default function PaginationSection({
     }
 
     // Add ellipsis at the end if necessary
-    if (activePages[activePages.length - 1] < pageNumbers.length) {
+    if (activePages[activePages.length - 1] < totalPages) {
       renderedPages.push(
         <PaginationEllipsis
           key="ellipsis-end"
@@ -102,15 +110,39 @@ export default function PaginationSection({
       <Pagination>
         <PaginationContent>
           <PaginationItem>
-            <PaginationPreviousLast onClick={handlePrevPageLast} />
-            <PaginationPrevious onClick={handlePrevPage} />
+            <PaginationPreviousLast
+              onClick={handlePrevPageLast}
+              className={
+                validCurrentPage <= 1 ? 'cursor-not-allowed opacity-50' : ''
+              }
+            />
+            <PaginationPrevious
+              onClick={handlePrevPage}
+              className={
+                validCurrentPage <= 1 ? 'cursor-not-allowed opacity-50' : ''
+              }
+            />
           </PaginationItem>
 
           {renderPages()}
 
           <PaginationItem>
-            <PaginationNext onClick={handleNextPage} />
-            <PaginationNextLast onClick={handleNextPageLast} />
+            <PaginationNext
+              onClick={handleNextPage}
+              className={
+                validCurrentPage >= totalPages
+                  ? 'cursor-not-allowed opacity-50'
+                  : ''
+              }
+            />
+            <PaginationNextLast
+              onClick={handleNextPageLast}
+              className={
+                validCurrentPage >= totalPages
+                  ? 'cursor-not-allowed opacity-50'
+                  : ''
+              }
+            />
           </PaginationItem>
         </PaginationContent>
       </Pagination>
