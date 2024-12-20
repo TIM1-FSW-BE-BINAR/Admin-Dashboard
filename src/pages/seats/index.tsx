@@ -9,21 +9,25 @@ import { TSeats, TSeatsCreate } from '@/types/seats';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ColumnDef } from '@tanstack/react-table';
 import { Edit, Trash } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SeatsForm } from '../../components/seats/seats-form';
 import EditModal from '@/components/shared/edit-modal';
+import PaginationSection from '@/components/shared/pagination-section';
+import { useSearchParams } from 'react-router-dom';
 
 export default function SeatsPage() {
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const [editData, setEditData] = useState<TSeats | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const queryClient = useQueryClient();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialPage = Number(searchParams.get('page')) || 1;
+  const initialLimit = Number(searchParams.get('limit')) || 10;
+  const [currentPage, setCurrentPage] = useState(initialPage);
+  const [postsPerPage, setPostsPerPage] = useState(initialLimit);
+  const [totalItems, setTotalItems] = useState(0);
 
-  const { data: seats, isLoading } = useQuery({
-    queryKey: ['seats'],
-    queryFn: seatsService.getAll
-  });
+  const queryClient = useQueryClient();
 
   const createMutation = useMutation({
     mutationFn: seatsService.create,
@@ -49,7 +53,53 @@ export default function SeatsPage() {
     }
   });
 
-  const columns: ColumnDef<TSeats>[] = [
+  const {
+    data: response,
+    isLoading,
+    refetch
+  } = useQuery({
+    queryKey: ['seats', currentPage, postsPerPage],
+    queryFn: () => seatsService.getAll(currentPage, postsPerPage)
+  });
+
+  useEffect(() => {
+    if (response) {
+      setTotalItems(
+        response.meta.pagination.totalPage * response.meta.pagination.pageItems
+      );
+    }
+  }, [response]);
+
+  const handlePageChange = async (newPage: number) => {
+    console.log('Changing to page:', newPage);
+    setCurrentPage(newPage);
+    setSearchParams({
+      page: newPage.toString(),
+      limit: postsPerPage.toString()
+    });
+    await refetch();
+  };
+
+  const handlePageSizeChange = async (newSize: number) => {
+    console.log('Changing page size to:', newSize);
+    setPostsPerPage(newSize);
+    setCurrentPage(1);
+    setSearchParams({
+      page: '1',
+      limit: newSize.toString()
+    });
+    await refetch();
+  };
+
+  useEffect(() => {
+    console.log('Current Page:', currentPage);
+    console.log('Posts Per Page:', postsPerPage);
+    refetch();
+  }, [currentPage, postsPerPage, refetch]);
+
+  const pageCount = Math.ceil(totalItems / postsPerPage);
+
+  const columns: ColumnDef<TSeats, unknown>[] = [
     {
       accessorKey: 'flightId',
       header: 'ID Penerbangan'
@@ -96,8 +146,6 @@ export default function SeatsPage() {
     }
   ];
 
-  if (isLoading) return <DataTableSkeleton columnCount={6} />;
-
   return (
     <div className="space-y-4 p-8">
       <div className="flex items-center justify-between">
@@ -124,7 +172,44 @@ export default function SeatsPage() {
         />
       </div>
 
-      <DataTable columns={columns} data={seats || []} pageCount={1} />
+      {isLoading ? (
+        <DataTableSkeleton columnCount={6} />
+      ) : (
+        <>
+          <DataTable<TSeats>
+            columns={columns}
+            data={response?.data || []}
+            pagination={{
+              pageSize: postsPerPage,
+              pageIndex: currentPage - 1,
+              pageCount: Math.ceil(totalItems / postsPerPage)
+            }}
+            onPaginationChange={(updater) => {
+              const state =
+                typeof updater === 'function'
+                  ? updater({
+                      pageIndex: currentPage - 1,
+                      pageSize: postsPerPage
+                    })
+                  : updater;
+              console.log('Pagination change:', state);
+              handlePageChange(state.pageIndex + 1);
+              if (state.pageSize !== postsPerPage) {
+                handlePageSizeChange(state.pageSize);
+              }
+            }}
+          />
+
+          {pageCount > 0 && (
+            <PaginationSection
+              totalPosts={totalItems}
+              postsPerPage={postsPerPage}
+              currentPage={currentPage}
+              setCurrentPage={handlePageChange}
+            />
+          )}
+        </>
+      )}
 
       <AlertModal
         isOpen={!!deleteId}

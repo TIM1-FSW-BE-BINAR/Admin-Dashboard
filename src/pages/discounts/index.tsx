@@ -146,7 +146,7 @@ export default function DiscountsPage() {
         />
       </div>
 
-      <DataTable columns={columns} data={airlines || []} pageCount={1} />
+      <DataTable columns={columns} data={airlines || []} />
 
       <AlertModal
         isOpen={!!deleteId}

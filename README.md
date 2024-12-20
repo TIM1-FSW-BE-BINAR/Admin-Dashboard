@@ -27,14 +27,14 @@ The goal of the project is to provide admin dashboard for Airfly - Airplane tick
 | -------------------------------------------- |
 | Admin can Create, Read, Update, Delete Items |
 
-| Feature                                       | Status |
-| --------------------------------------------- | ------ |
-| Responsive: support mobile design             | ✅     |
-| Authentication                                | ✅     |
-| State Management: React Hooks, Tanstack Query, Redux, Redux Toolkit  | ✅     |
-| Role: Admin                                   | ✅     |
-| Deployment: CloudFlare                        | ✅     |
-| GIT: Branching                                | ✅     |
+| Feature                                                             | Status |
+| ------------------------------------------------------------------- | ------ |
+| Responsive: support mobile design                                   | ✅     |
+| Authentication                                                      | ✅     |
+| State Management: React Hooks, Tanstack Query, Redux, Redux Toolkit | ✅     |
+| Role: Admin                                                         | ✅     |
+| Deployment: CloudFlare                                              | ✅     |
+| GIT: Branching                                                      | ✅     |
 
 ## 📑 Backend Documentation
 

@@ -147,7 +147,7 @@ export default function AirportsPage() {
         />
       </div>
 
-      <DataTable columns={columns} data={airports || []} pageCount={1} />
+      <DataTable columns={columns} data={airports || []} />
 
       <AlertModal
         isOpen={!!deleteId}
