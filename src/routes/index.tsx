@@ -1,7 +1,7 @@
-import React, { Suspense, lazy } from 'react';
+import { Suspense } from 'react';
 import { Navigate, Outlet, useRoutes } from 'react-router-dom';
 
-import ProtectedRoute from './ProtectedRoute'; // Import ProtectedRoute
+import ProtectedRoute from './ProtectedRoute';
 
 import FormPage from '@/pages/form';
 import NotFound from '@/pages/not-found';
