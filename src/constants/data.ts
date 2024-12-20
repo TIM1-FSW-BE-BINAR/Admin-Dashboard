@@ -14,18 +14,6 @@ export const navItems: NavItem[] = [
     label: 'Airlines'
   },
   {
-    title: 'Airports',
-    href: '/airports',
-    icon: 'towerControl',
-    label: 'Airports'
-  },
-  {
-    title: 'Flights',
-    href: '/flights',
-    icon: 'globe',
-    label: 'Flights'
-  },
-  {
     title: 'Notifications',
     href: '/Notifications',
     icon: 'bell',
@@ -38,15 +26,27 @@ export const navItems: NavItem[] = [
     label: 'Seats'
   },
   {
+    title: 'Airports',
+    href: '/airports',
+    icon: 'towerControl',
+    label: 'Airports'
+  },
+  {
+    title: 'Flights',
+    href: '/flights',
+    icon: 'globe',
+    label: 'Flights'
+  },
+  {
     title: 'Discount',
     href: '/discount',
     icon: 'percent',
     label: 'Discount'
-  },
-  {
-    title: 'Login',
-    href: '/login',
-    icon: 'login',
-    label: 'Login'
   }
+  // {
+  //   title: 'Login',
+  //   href: '/login',
+  //   icon: 'login',
+  //   label: 'Login'
+  // }
 ];
