@@ -9,15 +9,24 @@ const getAuthHeaders = () => {
 };
 
 export const seatsService = {
-  getAll: async (): Promise<TSeats[]> => {
-    const response = await fetchApi<TApiResponse<TSeats[]>>(
-      '/seats?page=253&limit=30',
-      {
-        method: 'GET',
-        headers: getAuthHeaders()
-      }
-    );
-    return response.data;
+  getAll: async (
+    page: number,
+    limit: number
+  ): Promise<TApiResponse<TSeats[]>> => {
+    try {
+      const response = await fetchApi<TApiResponse<TSeats[]>>(
+        `/seats?page=${page}&limit=${limit}`,
+        {
+          method: 'GET',
+          headers: getAuthHeaders()
+        }
+      );
+      console.log('API Response:', response);
+      return response;
+    } catch (error) {
+      console.error('Service Error:', error);
+      throw error;
+    }
   },
 
   getById: async (id: number): Promise<TSeats> => {

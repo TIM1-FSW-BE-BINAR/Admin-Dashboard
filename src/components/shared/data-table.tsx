@@ -23,27 +23,33 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  useReactTable
+  useReactTable,
+  type OnChangeFn,
+  type PaginationState
 } from '@tanstack/react-table';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
+interface DataTableProps<TData> {
+  columns: ColumnDef<TData, unknown>[];
   data: TData[];
-  pageSizeOptions?: number[];
-  pageCount: number;
+  pagination?: {
+    pageSize: number;
+    pageIndex: number;
+    pageCount: number;
+  };
+  onPaginationChange?: OnChangeFn<PaginationState>;
 }
 
-export default function DataTable<TData, TValue>({
+const pageSizeOptions = [10, 20, 30, 40, 50];
+
+export default function DataTable<TData>({
   columns,
   data,
-  pageCount,
-  pageSizeOptions = [10, 20, 30, 40, 50]
-}: DataTableProps<TData, TValue>) {
+  pagination,
+  onPaginationChange
+}: DataTableProps<TData>) {
   const [searchParams, setSearchParams] = useSearchParams();
   // Search params
   const page = searchParams?.get('page') ?? '1';
@@ -55,7 +61,7 @@ export default function DataTable<TData, TValue>({
   const fallbackPerPage = isNaN(perPageAsNumber) ? 10 : perPageAsNumber;
 
   // Handle server-side pagination
-  const [{ pageIndex, pageSize }, setPagination] = React.useState({
+  const [{ pageIndex, pageSize }] = React.useState({
     pageIndex: fallbackPage - 1,
     pageSize: fallbackPerPage
   });
@@ -73,16 +79,16 @@ export default function DataTable<TData, TValue>({
   const table = useReactTable({
     data,
     columns,
-    pageCount: pageCount ?? -1,
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
+    pageCount: pagination?.pageCount ?? -1,
     state: {
-      pagination: { pageIndex, pageSize }
+      pagination: {
+        pageIndex: pagination?.pageIndex ?? 0,
+        pageSize: pagination?.pageSize ?? 10
+      }
     },
-    onPaginationChange: setPagination,
-    getPaginationRowModel: getPaginationRowModel(),
-    manualPagination: true,
-    manualFiltering: true
+    onPaginationChange,
+    getCoreRowModel: getCoreRowModel(),
+    manualPagination: true
   });
 
   return (
