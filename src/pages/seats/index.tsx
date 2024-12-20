@@ -99,7 +99,7 @@ export default function SeatsPage() {
 
   const pageCount = Math.ceil(totalItems / postsPerPage);
 
-  const columns: ColumnDef<TSeats, any>[] = [
+  const columns: ColumnDef<TSeats, unknown>[] = [
     {
       accessorKey: 'flightId',
       header: 'ID Penerbangan'

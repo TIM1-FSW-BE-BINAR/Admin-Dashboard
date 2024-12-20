@@ -116,7 +116,15 @@ export default function AirlinesPage() {
         />
       </div>
 
-      <DataTable columns={columns} data={airlines || []} pageCount={1} />
+      <DataTable
+        columns={columns}
+        data={airlines || []}
+        pagination={{
+          pageSize: 10,
+          pageIndex: 0,
+          pageCount: 1
+        }}
+      />
 
       <AlertModal
         isOpen={!!deleteId}

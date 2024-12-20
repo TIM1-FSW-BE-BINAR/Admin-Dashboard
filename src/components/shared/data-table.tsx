@@ -23,11 +23,9 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
   useReactTable,
-  OnChangeFn,
-  PaginationState
+  type OnChangeFn,
+  type PaginationState
 } from '@tanstack/react-table';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import React from 'react';
@@ -63,7 +61,7 @@ export default function DataTable<TData>({
   const fallbackPerPage = isNaN(perPageAsNumber) ? 10 : perPageAsNumber;
 
   // Handle server-side pagination
-  const [{ pageIndex, pageSize }, setPagination] = React.useState({
+  const [{ pageIndex, pageSize }] = React.useState({
     pageIndex: fallbackPage - 1,
     pageSize: fallbackPerPage
   });
@@ -90,7 +88,6 @@ export default function DataTable<TData>({
     },
     onPaginationChange,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
     manualPagination: true
   });
 
