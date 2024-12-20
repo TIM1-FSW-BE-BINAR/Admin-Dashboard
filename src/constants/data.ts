@@ -38,12 +38,6 @@ export const navItems: NavItem[] = [
     label: 'Airports'
   },
   {
-    title: 'Flights',
-    href: '/flights',
-    icon: 'globe',
-    label: 'Flights'
-  },
-  {
     title: 'Discount',
     href: '/discount',
     icon: 'percent',

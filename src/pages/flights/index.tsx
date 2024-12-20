@@ -156,11 +156,11 @@ export default function FlightsPage() {
   return (
     <div className="space-y-4 p-8">
       <div className="flex items-center justify-between">
-        <Heading title="Discounts" description="Manage Discount" />
+        <Heading title="Flights" description="Manage Flight" />
         <PopupModal
           renderModal={(onClose) => (
             <div className="p-6">
-              <Heading title="Add Discount" description="Add new dicount" />
+              <Heading title="Add Flight" description="Add new flight" />
               <FlightsForm
                 onSubmit={async (data) => {
                   await createMutation.mutateAsync(data);

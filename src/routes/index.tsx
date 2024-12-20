@@ -69,10 +69,6 @@ export default function AppRouter() {
           element: <AirportsPage />
         },
         {
-          path: 'flights',
-          element: <FlightsPage />
-        },
-        {
           path: 'notifications',
           element: <NotificationsPage />
         },

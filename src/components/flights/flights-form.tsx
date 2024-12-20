@@ -305,7 +305,7 @@ export function FlightsForm({
           name="class"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Tipe Notifikasi</FormLabel>
+              <FormLabel>Class</FormLabel>
               <FormControl>
                 <select
                   {...field}
