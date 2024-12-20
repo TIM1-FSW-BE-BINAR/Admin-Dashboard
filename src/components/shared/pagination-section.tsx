@@ -67,7 +67,6 @@ export default function PaginationSection({
     }
   };
 
-  // Function to render page numbers with ellipsis
   const renderPages = () => {
     const renderedPages = activePages.map((page, idx) => (
       <PaginationItem
@@ -80,7 +79,6 @@ export default function PaginationSection({
       </PaginationItem>
     ));
 
-    // Add ellipsis at the start if necessary
     if (activePages[0] > 1) {
       renderedPages.unshift(
         <PaginationEllipsis
@@ -90,7 +88,6 @@ export default function PaginationSection({
       );
     }
 
-    // Add ellipsis at the end if necessary
     if (activePages[activePages.length - 1] < totalPages) {
       renderedPages.push(
         <PaginationEllipsis

@@ -14,6 +14,7 @@ export const seatsService = {
     limit: number
   ): Promise<TApiResponse<TSeats[]>> => {
     try {
+      console.log(`Fetching seats: page=${page}, limit=${limit}`);
       const response = await fetchApi<TApiResponse<TSeats[]>>(
         `/seats?page=${page}&limit=${limit}`,
         {
@@ -21,19 +22,8 @@ export const seatsService = {
           headers: getAuthHeaders()
         }
       );
-
-      // Transform response untuk menyesuaikan dengan format yang diharapkan
-      return {
-        data: response.data,
-        meta: {
-          total:
-            response.meta.pagination.totalPage *
-            response.meta.pagination.pageItems, // Perkiraan total items
-          page: response.meta.pagination.currentPage,
-          limit: response.meta.pagination.pageItems,
-          totalPages: response.meta.pagination.totalPage
-        }
-      };
+      console.log('API Response:', response);
+      return response;
     } catch (error) {
       console.error('Service Error:', error);
       throw error;

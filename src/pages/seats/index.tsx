@@ -59,12 +59,16 @@ export default function SeatsPage() {
     refetch
   } = useQuery({
     queryKey: ['seats', currentPage, postsPerPage],
-    queryFn: () => seatsService.getAll(currentPage, postsPerPage),
-    onSuccess: (response) => {
-      console.log('API Response:', response);
-      setTotalItems(response.meta.total);
-    }
+    queryFn: () => seatsService.getAll(currentPage, postsPerPage)
   });
+
+  useEffect(() => {
+    if (response) {
+      setTotalItems(
+        response.meta.pagination.totalPage * response.meta.pagination.pageItems
+      );
+    }
+  }, [response]);
 
   const handlePageChange = async (newPage: number) => {
     console.log('Changing to page:', newPage);
@@ -95,7 +99,7 @@ export default function SeatsPage() {
 
   const pageCount = Math.ceil(totalItems / postsPerPage);
 
-  const columns: ColumnDef<TSeats>[] = [
+  const columns: ColumnDef<TSeats, any>[] = [
     {
       accessorKey: 'flightId',
       header: 'ID Penerbangan'
@@ -172,15 +176,27 @@ export default function SeatsPage() {
         <DataTableSkeleton columnCount={6} />
       ) : (
         <>
-          <DataTable
+          <DataTable<TSeats>
             columns={columns}
             data={response?.data || []}
             pagination={{
               pageSize: postsPerPage,
               pageIndex: currentPage - 1,
-              pageCount: pageCount,
-              onPageChange: (newPage) => handlePageChange(newPage + 1),
-              onPageSizeChange: handlePageSizeChange
+              pageCount: Math.ceil(totalItems / postsPerPage)
+            }}
+            onPaginationChange={(updater) => {
+              const state =
+                typeof updater === 'function'
+                  ? updater({
+                      pageIndex: currentPage - 1,
+                      pageSize: postsPerPage
+                    })
+                  : updater;
+              console.log('Pagination change:', state);
+              handlePageChange(state.pageIndex + 1);
+              if (state.pageSize !== postsPerPage) {
+                handlePageSizeChange(state.pageSize);
+              }
             }}
           />
 

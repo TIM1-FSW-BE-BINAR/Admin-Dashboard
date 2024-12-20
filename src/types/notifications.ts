@@ -17,7 +17,7 @@ export type TNotifications = {
   description: string;
   type: string;
   isRead: boolean;
-  userId: string;
+  userId: number;
 };
 
 export type TNotificationsCreate = {
@@ -25,5 +25,5 @@ export type TNotificationsCreate = {
   description: string;
   type: string;
   isRead: boolean;
-  userId: string;
+  userId: number;
 };
