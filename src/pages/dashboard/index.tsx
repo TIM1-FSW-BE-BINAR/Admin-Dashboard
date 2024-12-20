@@ -461,11 +461,7 @@ export default function DashboardPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <DataTable
-                    columns={columns}
-                    data={bookings || []}
-                    pageCount={1}
-                  />
+                  <DataTable columns={columns} data={bookings || []} />
                 </CardContent>
               </Card>
             </div>

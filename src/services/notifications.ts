@@ -32,12 +32,15 @@ export const notificationsService = {
   },
 
   create: async (data: TNotificationsCreate): Promise<TNotifications> => {
-    // const formData = new FormData();
-    // formData.append('title', data.title);
-    // formData.append('description', data.description);
-    // formData.append('type', data.type);
-    // formData.append('isRead', data.isRead.toString());
-
+    const formattedData =
+      Number(data.userId) === 0
+        ? {
+            title: data.title,
+            description: data.description,
+            type: data.type,
+            isRead: data.isRead
+          }
+        : data;
     const response = await fetchApi<TApiResponse<TNotifications>>(
       '/notifications',
       {
@@ -46,12 +49,7 @@ export const notificationsService = {
           ...getAuthHeaders(),
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          title: data.title,
-          description: data.description,
-          type: data.type,
-          isRead: data.isRead
-        })
+        body: JSON.stringify(formattedData)
       }
     );
     return response.data;
@@ -61,12 +59,16 @@ export const notificationsService = {
     id: number,
     data: TNotificationsCreate
   ): Promise<TNotifications> => {
-    // const formData = new FormData();
-    // formData.append('title', data.title);
-    // formData.append('description', data.description);
-    // formData.append('type', data.type);
-    // formData.append('isRead', data.isRead.toString());
-
+    const formattedData =
+      Number(data.userId) === 0
+        ? {
+            title: data.title,
+            description: data.description,
+            type: data.type,
+            isRead: data.isRead,
+            userId: 0
+          }
+        : data;
     const response = await fetchApi<TApiResponse<TNotifications>>(
       `/notifications/${id}`,
       {
@@ -75,12 +77,7 @@ export const notificationsService = {
           ...getAuthHeaders(),
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          title: data.title,
-          description: data.description,
-          type: data.type,
-          isRead: data.isRead
-        })
+        body: JSON.stringify(formattedData)
       }
     );
     return response.data;

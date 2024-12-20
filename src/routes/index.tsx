@@ -5,9 +5,9 @@ import { useSelector } from 'react-redux';
 import FormPage from '@/pages/form';
 import NotFound from '@/pages/not-found';
 import AirlinesPage from '@/pages/airlines';
-import AirportsPage from '@/pages/airports';
 import NotificationsPage from '@/pages/notifications';
 import SeatsPage from '@/pages/seats';
+import AirportsPage from '@/pages/airports';
 import DiscountsPage from '@/pages/discounts';
 import FlightsPage from '@/pages/flights';
 import { RootState } from '../redux/store';
@@ -17,10 +17,6 @@ const DashboardLayout = lazy(
 );
 const SignInPage = lazy(() => import('@/pages/auth/signin'));
 const DashboardPage = lazy(() => import('@/pages/dashboard'));
-const StudentPage = lazy(() => import('@/pages/students'));
-const StudentDetailPage = lazy(
-  () => import('@/pages/students/StudentDetailPage')
-);
 
 // ----------------------------------------------------------------------
 
@@ -57,12 +53,20 @@ export default function AppRouter() {
           element: <AirlinesPage />
         },
         {
-          path: 'airports',
-          element: <AirportsPage />
+          path: 'notifications',
+          element: <NotificationsPage />
+        },
+        {
+          path: 'seats',
+          element: <SeatsPage />
         },
         {
           path: 'flights',
           element: <FlightsPage />
+        },
+        {
+          path: 'airports',
+          element: <AirportsPage />
         },
         {
           path: 'notifications',
@@ -75,14 +79,6 @@ export default function AppRouter() {
         {
           path: 'discount',
           element: <DiscountsPage />
-        },
-        {
-          path: 'student',
-          element: <StudentPage />
-        },
-        {
-          path: 'student/details',
-          element: <StudentDetailPage />
         },
         {
           path: 'form',
