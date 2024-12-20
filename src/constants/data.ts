@@ -42,11 +42,11 @@ export const navItems: NavItem[] = [
     href: '/discount',
     icon: 'percent',
     label: 'Discount'
-  },
-  {
-    title: 'Login',
-    href: '/login',
-    icon: 'login',
-    label: 'Login'
   }
+  // {
+  //   title: 'Login',
+  //   href: '/login',
+  //   icon: 'login',
+  //   label: 'Login'
+  // }
 ];
