@@ -14,7 +14,6 @@ export const seatsService = {
     limit: number
   ): Promise<TApiResponse<TSeats[]>> => {
     try {
-      console.log(`Fetching seats: page=${page}, limit=${limit}`);
       const response = await fetchApi<TApiResponse<TSeats[]>>(
         `/seats?page=${page}&limit=${limit}`,
         {
