@@ -457,7 +457,7 @@ export default function DashboardPage() {
                 <CardHeader>
                   <CardTitle>Recent Bookings</CardTitle>
                   <CardDescription>
-                    You made 20 + bookings this month
+                    You made {totalTransactions - 1}+ bookings this month
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
