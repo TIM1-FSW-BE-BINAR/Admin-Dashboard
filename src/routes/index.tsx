@@ -31,14 +31,46 @@ export default function AppRouter() {
         </ProtectedRoute>
       ),
       children: [
-        { element: <DashboardPage />, index: true },
-        { path: 'airlines', element: <AirlinesPage /> },
-        { path: 'notifications', element: <NotificationsPage /> },
-        { path: 'seats', element: <SeatsPage /> },
-        { path: 'flights', element: <FlightsPage /> },
-        { path: 'airports', element: <AirportsPage /> },
-        { path: 'discount', element: <DiscountsPage /> },
-        { path: 'form', element: <FormPage /> }
+        {
+          element: <DashboardPage />,
+          index: true
+        },
+        {
+          path: 'airlines',
+          element: <AirlinesPage />
+        },
+        {
+          path: 'notifications',
+          element: <NotificationsPage />
+        },
+        {
+          path: 'seats',
+          element: <SeatsPage />
+        },
+        {
+          path: 'flights',
+          element: <FlightsPage />
+        },
+        {
+          path: 'airports',
+          element: <AirportsPage />
+        },
+        {
+          path: 'notifications',
+          element: <NotificationsPage />
+        },
+        {
+          path: 'seats',
+          element: <SeatsPage />
+        },
+        {
+          path: 'discount',
+          element: <DiscountsPage />
+        },
+        {
+          path: 'form',
+          element: <FormPage />
+        }
       ]
     }
   ];
