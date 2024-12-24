@@ -62,8 +62,7 @@ export default function UserAuthForm() {
         );
       }
     } catch (err: any) {
-      console.error('Login error:', err);
-      toast.error('Email or password is incorrect');
+      console.log(err);
     } finally {
       setLoading(false);
     }
