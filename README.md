@@ -101,9 +101,19 @@ http://localhost:5173/
 
 You can see the demo of this project here:
 
-- [Demo](https://admin-dashboard-7tp.pages.dev/)
+- [Admin Dashboard Demo](https://admin-dashboard-7tp.pages.dev/)
 
-make sure to use the latest version of your browser. and also have real email ready for sign up and login.
+make sure to use the latest version of your browser.
+
+Admin Account:
+
+```bash
+admin@unolegam.com
+```
+
+```bash
+password
+```
 
 ## ©️ Credits
 
